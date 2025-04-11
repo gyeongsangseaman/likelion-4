@@ -1,38 +1,26 @@
-let count = 0;
+const toDoForm = document.querySelector("#toDoForm");
+const toDoInput = document.querySelector("#toDoInput");
+const toDoList = document.querySelector("#toDoList");
 
-const countBtn = document.querySelector("#countBtn");
-const resetBtn = document.querySelector("#resetBtn");
-
-countBtn.innerText = count;
-
-countBtn.addEventListener("click", () => {
-  countBtn.innerText = ++count;
-});
-
-resetBtn.addEventListener("click", () => {
-  count = 0;
-  countBtn.innerText = count;
-});
-
-const colorSelect = document.querySelector("#colorSelect");
-const colorBox = document.querySelector("#colorBox");
-
-colorBox.style.width = "100px";
-colorBox.style.height = "100px";
-colorBox.style.backgroundColor = "gray";
-colorBox.style.marginTop = "10px";
-
-colorSelect.addEventListener("change", (e) => {
-  console.log(e);
-  colorBox.style.backgroundColor = e.target.value;
-});
-
-const nameForm = document.querySelector("#nameForm");
-const nameInput = document.querySelector("#nameInput");
-const submitResult = document.querySelector("#submitResult");
-
-nameForm.addEventListener("submit", (e) => {
-  console.log(e);
+toDoForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  submitResult.innerText = `안녕하세요, ${nameInput.value}님!`;
+
+  const toDoText = toDoInput.value.trim();
+  if (toDoText === "") return;
+
+  const toDoItem = document.createElement("li");
+  toDoItem.innerText = toDoText;
+  toDoItem.className = "toDoItem";
+
+  const deletBtn = document.createElement("button");
+  deletBtn.innerText = "삭제";
+  deletBtn.className = "deletBtn";
+
+  deletBtn.addEventListener("click", () => {
+    toDoList.removeChild(toDoItem);
+  });
+
+  toDoItem.appendChild(deletBtn);
+  toDoList.appendChild(toDoItem);
+  toDoInput.value = "";
 });
